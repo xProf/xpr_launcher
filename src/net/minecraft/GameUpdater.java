@@ -183,7 +183,7 @@ public class GameUpdater implements Runnable
   protected void loadJarURLs() throws Exception {
     state = 2;
     
-    String jarList = "lwjgl.jar, jinput.jar, lwjgl_util.jar, " + mainGameUrl;
+    String jarList = "lwjgl.jar, jinput.jar, lwjgl_util.jar, client.zip" + mainGameUrl;
     jarList = trimExtensionByCapabilities(jarList);
 
     StringTokenizer jar = new StringTokenizer(jarList, ", ");
