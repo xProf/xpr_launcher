@@ -13,6 +13,7 @@ public class setting {
 	 public static String newsUrl = "http://minecraft-tyachiv.org.ua/news/index.htm";
 	 public static String catalogSkinsUrl = "http://www.minecraftskins.com/";
 	 public static String mineFolder = "minecraft";//Папка в которой находится майнкрафт (.minecraft)
+         public static String mineFolderAbsolute = System.getProperties().getProperty("user.home").replace("\\","/") +"/AppData/Roaming/."+mineFolder;//Папка в которой находится майнкрафт (.minecraft)
 	 public static String downLaunchLink = "http://minecraft-tyachiv.org.ua/_launcher16/download.jsp";
 	 public static String client1 = "minecraft";
 	 public static String client2 = "minecraftLight";

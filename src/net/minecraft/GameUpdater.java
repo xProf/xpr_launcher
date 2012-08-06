@@ -260,7 +260,7 @@ public class GameUpdater implements Runnable
           if (shouldUpdate)
           {
             writeVersionFile(versionFile, "");
-            deleteDirectory(new File(setting.mineFolder));
+            deleteDirectory(new File(setting.mineFolderAbsolute)); 
             downloadJars(path);
             extractJars(path);
             extractNatives(path);

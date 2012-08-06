@@ -713,7 +713,7 @@ balanceProfileLabel.setFont(fontProfile);
 	      String allUser = values[2];
 		 
 		 if (result.contains(":")){
-			 	text.setText("Сервер ввімкнено, грають " + onlineUser + " з " + allUser + " можливих");
+ 			 	text.setText(setting.mineFolderAbsolute+" Сервер ввімкнено, грають " + onlineUser + " з " + allUser + " можливих");
 			 	onofoff = 1;
 		 } else if (result.equals("OFF")){
 			 text.setText("Сервер вимкнено");
@@ -728,7 +728,7 @@ balanceProfileLabel.setFont(fontProfile);
 		 
 		} catch (Exception e) {
 		      e.printStackTrace();
-		      text.setText("Помилка при підключенні до серверу");
+                      text.setText("Помилка при підключенні до серверу");
 		      text.setForeground(offColor);
 		      onofoff = 2;
 		}
