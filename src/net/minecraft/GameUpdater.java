@@ -44,8 +44,9 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Pack200;
 
-
 import SevenZip.LzmaAlone;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class GameUpdater implements Runnable
 {
@@ -92,6 +93,13 @@ public class GameUpdater implements Runnable
   
   public String progressStatus;
   
+  static public boolean cleanMineFolder()
+  {      
+     deleteDirectory(new File(setting.mineFolderAbsolute)); 
+     File binFolder=new File(setting.mineFolderAbsolute+File.separator+"bin");
+     binFolder.mkdirs();
+     return true;
+  }
   
   static public boolean deleteDirectory(File path) 
   {
@@ -184,7 +192,7 @@ public class GameUpdater implements Runnable
   protected void loadJarURLs() throws Exception {
     state = 2;
     
-    String jarList = "lwjgl.jar, jinput.jar, lwjgl_util.jar, client.zip" + mainGameUrl;
+    String jarList = "lwjgl.jar, jinput.jar, lwjgl_util.jar, client.zip, " + mainGameUrl;
     jarList = trimExtensionByCapabilities(jarList);
 
     StringTokenizer jar = new StringTokenizer(jarList, ", ");
@@ -261,7 +269,7 @@ public class GameUpdater implements Runnable
           if (shouldUpdate)
           {
             writeVersionFile(versionFile, "");
-            deleteDirectory(new File(setting.mineFolderAbsolute)); 
+            cleanMineFolder();
             downloadJars(path);
             extractJars(path);
             extractNatives(path);
@@ -576,10 +584,13 @@ public class GameUpdater implements Runnable
     f.delete();
   }
 
+  
   protected void extractJars(String path)
     throws Exception
   {
     state = 5;
+    
+    UnZip();
     
     float increment = 10.0F / urlList.length;
 
@@ -767,4 +778,175 @@ public class GameUpdater implements Runnable
     }
     return false;
   }
+
+  protected void UnZip() throws PrivilegedActionException
+  {
+    String szZipFilePath;
+    String szExtractPath;
+    String path = (String)AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+        public Object run() throws Exception {
+          return Util.getWorkingDirectory() + File.separator;
+        }
+      }); 
+    int i;
+    
+    szZipFilePath = path + "bin" + File.separator + "client.zip";
+      
+    File f = new File(szZipFilePath);
+    if(!f.exists())
+    {
+      System.out.println(
+	"\nNot found: " + szZipFilePath);
+      //System.exit(0);
+    }
+      
+    if(f.isDirectory())
+    {
+      System.out.println(
+	"\nNot file: " + szZipFilePath);
+      //System.exit(0);
+    }
+    
+    System.out.println(
+      "Enter path to extract files: ");
+    szExtractPath = path;
+    
+    File f1 = new File(szExtractPath);
+    if(!f1.exists())
+    {
+      System.out.println(
+	"\nNot found: " + szExtractPath);
+      //System.exit(0);
+    }
+      
+    if(!f1.isDirectory())
+    {
+      System.out.println(
+	"\nNot directory: " + szExtractPath);
+      //System.exit(0);
+    }
+    
+    ZipFile zf; 
+    Vector zipEntries = new Vector();
+       
+    try
+    {  
+      zf = new ZipFile(szZipFilePath);    
+      Enumeration en = zf.entries();
+      
+      while(en.hasMoreElements())
+      {
+        zipEntries.addElement(
+	  (ZipEntry)en.nextElement());
+      }
+      
+      for (i = 0; i < zipEntries.size(); i++)
+      {
+        ZipEntry ze = 
+	  (ZipEntry)zipEntries.elementAt(i);
+	  
+        extractFromZip(szZipFilePath, szExtractPath,
+	  ze.getName(), zf, ze);
+      }
+      
+      zf.close();
+      System.out.println("Done!");
+    }
+    catch(Exception ex)
+    {
+      System.out.println(ex.toString());
+    }
+  }
+  
+  // ============================================
+  // extractFromZip
+  // ============================================
+  static void extractFromZip(
+    String szZipFilePath, String szExtractPath,
+    String szName,
+    ZipFile zf, ZipEntry ze)
+  {
+    if(ze.isDirectory())
+      return;
+      
+    String szDstName = slash2sep(szName);
+    
+    String szEntryDir;
+    
+    if(szDstName.lastIndexOf(File.separator) != -1)
+    {
+      szEntryDir =
+        szDstName.substring(
+	  0, szDstName.lastIndexOf(File.separator));
+    }
+    else	  
+      szEntryDir = "";
+    
+    System.out.print(szDstName);
+    long nSize = ze.getSize();
+    long nCompressedSize = 
+      ze.getCompressedSize();
+    
+    System.out.println(" " + nSize + " (" +
+      nCompressedSize + ")");  
+  
+    try
+    {
+       File newDir = new File(szExtractPath +
+	 File.separator + szEntryDir);
+	 
+       newDir.mkdirs();	 
+       
+       FileOutputStream fos = 
+	 new FileOutputStream(szExtractPath +
+	 File.separator + szDstName);
+
+       InputStream is = zf.getInputStream(ze);
+       byte[] buf = new byte[1024];
+
+       int nLength;
+       
+       while(true)
+       {
+         try
+         {
+	   nLength = is.read(buf);
+         }	 
+         catch (EOFException ex)
+         {
+	   break;
+	 }  
+	 
+         if(nLength < 0) 
+	   break;
+         fos.write(buf, 0, nLength);
+       }
+       
+       is.close();
+       fos.close();
+    }   
+    catch(Exception ex)
+    {
+      System.out.println(ex.toString());
+      //System.exit(0);
+    }
+  }  
+
+    static String slash2sep(String src)
+  {
+    int i;
+    char[] chDst = new char[src.length()];
+    String dst;
+    
+    for(i = 0; i < src.length(); i++)
+    {
+      if(src.charAt(i) == '/')
+        chDst[i] = File.separatorChar;
+      else
+        chDst[i] = src.charAt(i);
+    }
+    dst = new String(chDst);
+    return dst;
+  }
+  
 }
