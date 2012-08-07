@@ -91,7 +91,8 @@ public class GameUpdater implements Runnable
   public boolean shouldUpdate;
   
   public String progressStatus;
-    
+  
+  
   static public boolean deleteDirectory(File path) 
   {
     if( path.exists() ) 
