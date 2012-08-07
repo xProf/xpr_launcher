@@ -1,6 +1,7 @@
 package net.minecraft;
 
 public class setting {
+        public static String forPetPro="test";
 	public static String siteLink = "http://minecraft-tyachiv.org.ua/";
 	 public static String forumLink = "http://minecraft-tyachiv.org.ua/_launcher16/forum.php";
 	 public static String uslugiLink = "http://minecraft-tyachiv.org.ua/_launcher16/donat.php";
