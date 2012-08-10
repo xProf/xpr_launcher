@@ -33,7 +33,7 @@ public class OptionsPanel extends JDialog
     setModal(true);
 
     JPanel panel = new JPanel(new BorderLayout());
-    JLabel label = new JLabel("Настройки", 0);
+    JLabel label = new JLabel("Налаштування", 0);
     label.setBorder(new EmptyBorder(0, 0, 16, 0));
     label.setFont(new Font("Default", 1, 16));
     panel.add(label, "North");
@@ -44,7 +44,7 @@ public class OptionsPanel extends JDialog
     optionsPanel.add(labelPanel, "West");
     optionsPanel.add(fieldPanel, "Center");
 
-    final TransparentCheckbox dlFl = new TransparentCheckbox ("Обновить клиент!");
+    final TransparentCheckbox dlFl = new TransparentCheckbox ("Оновити клієнт!");
 
     
     dlFl.addActionListener(new ActionListener() {
@@ -59,20 +59,20 @@ public class OptionsPanel extends JDialog
       });
     
     
-    final JButton forceButton = new JButton("Обновить клиент!");
+    final JButton forceButton = new JButton("Оновити клієнт!");
     forceButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ae) {
         GameUpdater.forceUpdate = true;
-        forceButton.setText("Клиент будет обновлен!");
+        forceButton.setText("Клієнт буде оновлено!");
         forceButton.setEnabled(false);
       }
     });
     
     fieldPanel.add(dlFl);
-    labelPanel.add(new JLabel("Принудительно обновить клиент: ", 4));
+    labelPanel.add(new JLabel("Примусово оновити клієнт: ", 4));
     fieldPanel.add(forceButton);
 
-    labelPanel.add(new JLabel("Расположение клиента на компьютере: ", 4));
+    labelPanel.add(new JLabel("Розташування клієнта на комп'ютері: ", 4));
     TransparentLabel dirLink = new TransparentLabel(Util.getWorkingDirectory().toString()) {
       private static final long serialVersionUID = 0L;
 

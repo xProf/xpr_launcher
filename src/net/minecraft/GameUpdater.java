@@ -273,7 +273,7 @@ public class GameUpdater implements Runnable
             downloadJars(path);
             extractJars(path);
             extractNatives(path);
-
+            deleteClientZip(path);
             if (latestVersion != null) {
               percentage = 90;
               writeVersionFile(versionFile, latestVersion);
@@ -956,5 +956,15 @@ public class GameUpdater implements Runnable
     }
     return i;
 }
-
+protected void deleteClientZip(String path) throws Exception
+{
+     File clientZip=new File(setting.mineFolderAbsolute+File.separator+"bin"+File.separator+"client.zip");
+    try{
+     if (clientZip.exists()) clientZip.delete();  
+    }
+    catch(Exception localException)
+    {       
+    }
+}
+        
 }
