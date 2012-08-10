@@ -58,52 +58,6 @@ public class LauncherFrame extends Frame
 
     super("Minecraft Launcher");
     setResizable(false);
-	try {
-		Properties defaultProps = new Properties();
-		FileInputStream in;
-		in = new FileInputStream(Util.getWorkingDirectory() + "/launcher.properties");
-		defaultProps.load(in);
-
-		clientId = defaultProps.getProperty("client");
-		
-		 if (clientId.trim().equals("2")){
-			 client=setting.client2;
-		 }else{
-				 client=setting.client1;
-		 }
-		in.close();
-		saveSetting("23");
-	} catch (FileNotFoundException e) {
-		  
-			try{
-		 FileChannel source = new FileInputStream("src/launcher.properties").getChannel();
-		 clientId = "1";
-	      FileChannel destination = new FileOutputStream(Util.getWorkingDirectory() + "/launcher.properties").getChannel();
-	  
-	      destination.transferFrom(source, 0, source.size());
-	  
-	      source.close();
-	      destination.close();
-			}catch (IOException e1) {
-				clientId = "1";
-				client=setting.client1;
-	  	}
-
-	}catch (IOException e) {
-		try{
-	 FileChannel source = new FileInputStream("src/launcher.properties").getChannel();
-	    
-      FileChannel destination = new FileOutputStream(Util.getWorkingDirectory() + "/launcher.properties").getChannel();
-  
-      destination.transferFrom(source, 0, source.size());
-  
-      source.close();
-      destination.close();
-		}catch (IOException e1) {
-			clientId = "1";
-			client=setting.client1;
-  	}
-	}
 
     
     Thread thr = new Thread(new InitSplash());

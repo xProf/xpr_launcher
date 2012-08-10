@@ -61,10 +61,10 @@ public class GameUpdater implements Runnable
   public static final int STATE_START_REAL_APPLET = 9;
   public static final int STATE_DONE = 10;
   public int percentage;
-  public int currentSizeDownload;
-  public int totalSizeDownload;
-  public int currentSizeExtract;
-  public int totalSizeExtract;
+  public long currentSizeDownload;
+  public long totalSizeDownload;
+  public long currentSizeExtract;
+  public long totalSizeExtract;
   protected URL[] urlList;
   private static ClassLoader classLoader;
   protected Thread loaderThread;
@@ -440,12 +440,12 @@ public class GameUpdater implements Runnable
       totalSizeDownload += fileSizes[i];
     }
 
-    int initialPercentage = this.percentage = 10;
+    long initialPercentage = this.percentage = 10;
 
     byte[] buffer = new byte[65536];
     for (int i = 0; i < urlList.length; i++) {
       if (skip[i] != false) {
-        percentage = (initialPercentage + fileSizes[i] * 45 / totalSizeDownload);
+        percentage = safeLongToInt(initialPercentage + fileSizes[i] * 45 / totalSizeDownload);
       }
         boolean downloadFile = true;
 
@@ -483,7 +483,7 @@ public class GameUpdater implements Runnable
             m.update(buffer, 0, bufferSize);
             currentSizeDownload += bufferSize;
             fileSize += bufferSize;
-            percentage = (initialPercentage + currentSizeDownload * 45 / totalSizeDownload);
+            percentage = safeLongToInt(initialPercentage + currentSizeDownload * 45 / totalSizeDownload);
             subtaskMessage = ("Завантаження: " + currentFile + " " + currentSizeDownload * 100 / totalSizeDownload + "%");
             progressStatus = (currentSizeDownload * 100 / totalSizeDownload + "%");
 
@@ -618,7 +618,7 @@ public class GameUpdater implements Runnable
   {
     state = 5;
 
-    int initialPercentage = percentage;
+    long initialPercentage = percentage;
 
     String nativeJar = getJarName(urlList[(urlList.length - 1)]);
 
@@ -686,7 +686,7 @@ public class GameUpdater implements Runnable
         out.write(buffer, 0, bufferSize);
         currentSizeExtract += bufferSize;
 
-        percentage = (initialPercentage + currentSizeExtract * 20 / totalSizeExtract);
+        percentage = safeLongToInt(initialPercentage + currentSizeExtract * 20 / totalSizeExtract);
         subtaskMessage = ("Extracting: " + entry.getName() + " " + currentSizeExtract * 100 / totalSizeExtract + "%");
       }
 
@@ -948,5 +948,13 @@ public class GameUpdater implements Runnable
     dst = new String(chDst);
     return dst;
   }
-  
+
+    public static int safeLongToInt(long l) {
+    int i = (int)l;
+    if ((long)i != l) {
+        throw new IllegalArgumentException(l + " cannot be cast to int without changing its value.");
+    }
+    return i;
+}
+
 }

@@ -65,7 +65,7 @@ public class Launcher extends Applet
 
     customParameters.put("username", userName);
     customParameters.put("sessionid", sessionId);
-    gameUpdater = new GameUpdater(latestVersion, LauncherFrame.client + ".jar?user=" + userName + "&ticket=" + downloadTicket);
+    gameUpdater = new GameUpdater(latestVersion, "minecraft.jar?user=" + userName + "&ticket=" + downloadTicket);
   }
 
   public boolean canPlayOffline() {
