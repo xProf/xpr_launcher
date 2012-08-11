@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -67,7 +68,7 @@ public class LauncherFrame extends Frame
     
     panelBg.setLayout(new BorderLayout());
     
-    panelBg.setPreferredSize(new Dimension(854, 482));
+    panelBg.setPreferredSize(new Dimension(854, 490));
     
     JPanel LauncherFormAll = new LoginForm(this);
     
@@ -277,15 +278,14 @@ public class LauncherFrame extends Frame
       return;
   }
   private void md5s(){
-	  String applicationData = System.getenv("APPDATA");
-      String  f = applicationData + "/." + setting.mineFolder + "/bin/"+ client +".jar";
+      String  f = setting.mineFolderAbsolute + File.separator+ "bin"+File.separator+"minecraft.jar";
  
 
  try{
-  MessageDigest md5  = MessageDigest.getInstance("MD5");
-String p = calculateHash(md5, f);
+  MessageDigest md5  = MessageDigest.getInstance("md5");
+  String p = calculateHash(md5, f);
 	try {	     	
-					URL localURL = new URL(setting.hashLink + p);
+					URL localURL = new URL(setting.hashLink +p);
 					BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(localURL.openStream()));
 					String result = localBufferedReader.readLine();
 					if (result.trim().equals("1")){

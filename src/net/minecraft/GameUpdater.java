@@ -90,7 +90,7 @@ public class GameUpdater implements Runnable
   private String mainGameUrl;
   public boolean pauseAskUpdate;
   public boolean shouldUpdate;
-  
+  private String version;
   public String progressStatus;
   
   static public boolean cleanMineFolder()
@@ -250,6 +250,8 @@ public class GameUpdater implements Runnable
         dir.mkdirs();
       }
       
+      latestVersion= checkUpdate();
+      
       if (latestVersion != null) {
         File versionFile = new File(dir, "version");
        
@@ -259,8 +261,8 @@ public class GameUpdater implements Runnable
           cacheAvailable = true;
           percentage = 90;
         }
-
-        if ((forceUpdate) || (!cacheAvailable)) {
+        
+          if ((forceUpdate) || (!cacheAvailable)) {
           shouldUpdate = true;
           if ((!forceUpdate) && (versionFile.exists()))
           {
@@ -966,5 +968,20 @@ protected void deleteClientZip(String path) throws Exception
     {       
     }
 }
-        
+public  String checkUpdate() {try {
+           URL url = new URL(setting.versionUrl);
+	     URLConnection getVer = url.openConnection();
+	     BufferedReader in = new BufferedReader(
+	                             new InputStreamReader(
+	                             getVer.getInputStream()));
+	     String inputLine;
+	     inputLine = in.readLine(); 
+	     in.close();
+		 
+		   return inputLine;
+		   }
+		catch (Exception e) {
+			return version;
+		}
+	  }        
 }

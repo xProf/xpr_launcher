@@ -18,6 +18,7 @@ public class setting {
 	 public static String client1 = "minecraft";
 	 public static String client2 = "minecraft2";
 	 public static String loadLinkUrlSkins = "http://minecraft-tyachiv.org.ua/_launcher16/skinLoad.php";
+         public static String versionUrl= "http://minecraft-tyachiv.org.ua/download/version";
          public static String onStartUrl="http://minecraft-tyachiv.org.ua/_launcher16/start.php";
          public static String antiTwinkUrl="http://minecraft-tyachiv.org.ua/_launcher16/amlt.php";
          
