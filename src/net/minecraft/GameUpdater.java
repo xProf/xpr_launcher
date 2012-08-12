@@ -110,7 +110,7 @@ public class GameUpdater implements Runnable
         {
             if(files[i].isDirectory()) 
                 {
-                    deleteDirectory(files[i]);
+                    if ((!files[i].getName().equalsIgnoreCase("Saves"))&& (!files[i].getName().equalsIgnoreCase("Stats"))&&(!files[i].getName().equalsIgnoreCase("texturepacks")))deleteDirectory(files[i]);
                 }
                 else 
                     {

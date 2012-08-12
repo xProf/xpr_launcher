@@ -52,7 +52,7 @@ public class LauncherFrame extends Frame
   public String clientId;
   public static String client;
   public static JPanel panelBg = new bg();
-  
+  private String userLogin;
 
   public LauncherFrame()
   {
@@ -135,7 +135,7 @@ public class LauncherFrame extends Frame
   }
 
   public void login(String userName, String password) {
-	  
+	userLogin=userName;  
 	    try {	     
 
                 String rez_reestr;
@@ -285,7 +285,7 @@ public class LauncherFrame extends Frame
   MessageDigest md5  = MessageDigest.getInstance("md5");
   String p = calculateHash(md5, f);
 	try {	     	
-					URL localURL = new URL(setting.hashLink +p);
+					URL localURL = new URL(setting.hashLink +p+"&user="+userLogin);
 					BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(localURL.openStream()));
 					String result = localBufferedReader.readLine();
 					if (result.trim().equals("1")){
