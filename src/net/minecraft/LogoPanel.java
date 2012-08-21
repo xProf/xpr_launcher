@@ -26,7 +26,7 @@ public class LogoPanel extends JPanel
       BufferedImage src = ImageIO.read(LoginForm.class.getResource("logo.png"));
       int w = src.getWidth();
       int h = src.getHeight();
-      bgImage = src.getScaledInstance(w, h, 16);
+      bgImage = src.getScaledInstance(w, h, 32);
       setPreferredSize(new Dimension(w, h));
     } catch (IOException e) {
       e.printStackTrace();

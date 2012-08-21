@@ -9,7 +9,7 @@
    implements Runnable
  {
    private static final long serialVersionUID = 4901025307215330193L;
-   static Image bi = Toolkit.getDefaultToolkit().getImage(InitSplash.class.getResource("logo.png"));
+   static Image bi = Toolkit.getDefaultToolkit().getImage(InitSplash.class.getResource("mc4.png"));
  
    ImageIcon ii = new ImageIcon(bi);
  
