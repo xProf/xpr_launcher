@@ -588,13 +588,17 @@ public class LoginForm extends TransparentPanel
       
       
 String usernameProfile = values[2];
-String balanceProfile = values[4];
+String balanceMoon = values[4];
+String balanceSun = values[5];
 JLabel usernameProfileLabel = new JLabel("Вітаю, " + usernameProfile);
-JLabel balanceProfileLabel = new JLabel("Ваш баланс: " + balanceProfile + " мун");
+JLabel balanceMoonLabel = new JLabel("Ваш баланс: " + balanceMoon + " мун");
+JLabel balanceSunLabel = new JLabel("та " + balanceSun + " сан");
 usernameProfileLabel.setForeground(Color.WHITE);
-balanceProfileLabel.setForeground(Color.WHITE);
+balanceMoonLabel.setForeground(Color.WHITE);
+balanceSunLabel.setForeground(Color.WHITE);
 usernameProfileLabel.setFont(fontProfile);
-balanceProfileLabel.setFont(fontProfile);
+balanceMoonLabel.setFont(fontProfile);
+balanceSunLabel.setFont(fontProfile);
 	  
 	   JPanel p = new TransparentPanel(null);
 	   
@@ -621,7 +625,8 @@ balanceProfileLabel.setFont(fontProfile);
 	    
 	    errorPanels.add(viewSkin, new GridBagConstraints(0, 2, 2, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.NONE, new Insets(8, 0, 8, 0), 0, 0));
 	    
-	    errorPanels.add(balanceProfileLabel, new GridBagConstraints(0, 3, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+	    errorPanels.add(balanceMoonLabel, new GridBagConstraints(0, 2, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
+	    errorPanels.add(balanceSunLabel, new GridBagConstraints(0, 3, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
         
 	    errorPanels.add(enterSkins, new GridBagConstraints(0, 4, 1, 1, 1, 1,GridBagConstraints.SOUTH , GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
 	    errorPanels.add(optionsButton, new GridBagConstraints(0, 5, 1, 1, 1, 1,GridBagConstraints.SOUTH , GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
