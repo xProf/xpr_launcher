@@ -18,10 +18,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 //import java.util.Date;
 
@@ -140,14 +143,17 @@ public class LauncherFrame extends Frame
 	        return;
 	      }
 	      if (!result.contains(":")) {
-	        if (result.trim().equals("Bad login")) {
+                int beginString=result.indexOf("[[");  
+                String resultObr=result.substring(beginString,beginString+15);
+	        if (resultObr.trim().equals("[[Bad login  ]]")) {
 	          showError("Неправильный логін чи пароль!");
 	          return;
-	        } else if (result.trim().equals("Bad version")) {
+	        } else if (resultObr.trim().equals("[[Bad version]]")) {
 	          showError("Необхідно оновити лаунчер");
+                  updateLauncher();
 	          return;
 	        } else {
-	          showError(result);
+	          showError(resultObr);
 	          return;
 	        }
 	      }
@@ -242,7 +248,7 @@ public class LauncherFrame extends Frame
   }
   
   public void Startminecraft (String result){
-	  setResizableLol();
+	  setResizable(true);
 	  md5s();
       String[] values = result.split(":");
 
@@ -264,15 +270,40 @@ public class LauncherFrame extends Frame
       
       return;
   }
+     
+  private String getHash(String str) 
+  {
+        MessageDigest md5 ;        
+        StringBuffer  hexString = new StringBuffer();
+        try {
+            md5 = MessageDigest.getInstance("md5");
+            md5.reset();
+            md5.update(str.getBytes()); 
+            byte messageDigest[] = md5.digest();
+            for (int i = 0; i < messageDigest.length; i++) {
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            }
+        } 
+        catch (NoSuchAlgorithmException e) {                        
+            return e.toString();
+        }
+        return hexString.toString();
+    }
+  
   private void md5s(){
-      String  f = setting.mineFolderAbsolute + File.separator+ "bin"+File.separator+"minecraft.jar";
- 
-
- try{
+      String allHashes=calculateDirectoryHash(new File(setting.mineFolderAbsolute + File.separator+ "bin"));
+      allHashes=allHashes+calculateDirectoryHash(new File(setting.mineFolderAbsolute + File.separator+ "mods"));
+      String  f = setting.mineFolderAbsolute + File.separator+"updater.exe";
+  try{
   MessageDigest md5  = MessageDigest.getInstance("md5");
-  String p = calculateHash(md5, f);
-	try {	     	
-					URL localURL = new URL(setting.hashLink +p+"&user="+userLogin);
+  String p =allHashes + calculateHash(md5, f);
+ 
+  String hashOfAllHashes=getHash(p);
+  	try {	     	
+					URL localURL2 = new URL(setting.hashEtalonLink +hashOfAllHashes+"&user="+userLogin);
+					BufferedReader localBufferedReader2 = new BufferedReader(new InputStreamReader(localURL2.openStream()));
+
+                                        URL localURL = new URL(setting.hashLink +hashOfAllHashes+"&user="+userLogin);
 					BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(localURL.openStream()));
 					String result = localBufferedReader.readLine();
 					if (result.trim().equals("1")){
@@ -324,8 +355,36 @@ public static void saveSetting(String prop) throws IOException{
         output.close();
 
 }
-public void setResizableLol(){
-	setResizable(true);
+
+private String calculateDirectoryHash(File path)
+{
+    String hashMD5="";
+    if (path.exists())
+    {
+        File[] files=path.listFiles();
+        for (int i=0;i<files.length;i++)
+        {
+            if (files[i].isDirectory()) hashMD5=hashMD5+calculateDirectoryHash(files[i]);
+                 else 
+                    {
+                try {
+                    MessageDigest md5  = MessageDigest.getInstance("md5");
+                    hashMD5=hashMD5+calculateHash(md5,files[i].getAbsolutePath());
+                } catch (Exception e) {
+                    Logger.getLogger(LauncherFrame.class.getName()).log(Level.SEVERE, null, e);
+                }
+                    }
+        }    
+    }
+    return hashMD5;
 }
 
+private void updateLauncher() throws IOException
+{
+    if (new File(setting.mineFolderAbsolute+File.separator+setting.updaterFileName).exists() )
+        {
+            Runtime.getRuntime().exec(setting.mineFolderAbsolute+File.separator+setting.updaterFileName);
+            System.exit(0);
+        }
+}
 }

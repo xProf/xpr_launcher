@@ -110,12 +110,13 @@ public class GameUpdater implements Runnable
         {
             if(files[i].isDirectory()) 
                 {
-                    if ((!files[i].getName().equalsIgnoreCase("Saves"))&& (!files[i].getName().equalsIgnoreCase("Stats"))&&(!files[i].getName().equalsIgnoreCase("texturepacks")))deleteDirectory(files[i]);
+                    if ((!files[i].getName().equalsIgnoreCase("Saves"))&& (!files[i].getName().equalsIgnoreCase("Stats"))&&(!files[i].getName().equalsIgnoreCase("texturepacks"))) deleteDirectory(files[i]);
                 }
                 else 
                     {
-                    if (!files[i].getName().equals("minecraft.exe")) files[i].delete();
+                    if (!files[i].getName().equalsIgnoreCase("minecraft.exe")) files[i].delete();
                     }
+            new File("1").mkdir();
         }
         }
     return( path.delete() );
