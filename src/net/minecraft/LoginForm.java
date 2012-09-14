@@ -56,7 +56,7 @@ public class LoginForm extends TransparentPanel
   private TransparentCheckbox rememberBox = new TransparentCheckbox("Запам'ятати пароль");
   private TransparentButton launchButton = new TransparentButton("Вхід");
   private TransparentButton optionsButton = new TransparentButton("Налаштування");
-  private TransparentButton registerButton = new TransparentButton("Реєстрація");
+//  private TransparentButton registerButton = new TransparentButton("Реєстрація");
   private TransparentButton retryButton = new TransparentButton("Спробувати ще раз");
   private TransparentButton offlineButton = new TransparentButton("Грати оффлайн");
   private TransparentButton forgetPass = new TransparentButton ("Забули пароль");
@@ -108,13 +108,15 @@ public class LoginForm extends TransparentPanel
     launchButton.addActionListener(al);
 
 
-    
+/*    
     registerButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent ae) {
           new RegisterPanel(launcherFrame).setVisible(true);
         }
+         
       });
-  }
+*/
+ }
 
   public void doLogin() {
 	  launcherFrame.panelBg.removeAll();
@@ -279,7 +281,7 @@ public class LoginForm extends TransparentPanel
 	    panel.setOpaque(false);
 	    
 	    
-
+            rememberBox.setVisible(true);
 	    userNameL.setForeground(LIGHTBLUEAUTH);
 	    passwordL.setForeground(LIGHTBLUEAUTH);
 
@@ -290,10 +292,12 @@ public class LoginForm extends TransparentPanel
 	    panel.add(passwordL, new GridBagConstraints(0, 2, 1, 1, 1, 1,GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 20, 0, 0), 0, 0));
 	    panel.add(password, new GridBagConstraints(1, 2, 1, 1, 1, 1,GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 20), 0, 0));
 	    
-	    panel.add(rememberBox, new GridBagConstraints(1, 3, 2, 1, 1, 1,GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 20), 0, 0));
+            panel.add(rememberBox, new GridBagConstraints(1, 3, 2, 1, 1, 1,GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 20), 0, 0));
 	    panel.add(launchButton, new GridBagConstraints(0, 4, 2, 1, 1, 1,GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
 	    
-	    panel.add(registerButton, new GridBagConstraints(0, 5, 2, 1, 1, 1,GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 20, 35, 20), 0, 0));
+            rememberBox.setVisible(true);
+
+//            panel.add(registerButton, new GridBagConstraints(0, 5, 2, 1, 1, 1,GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 20, 35, 20), 0, 0));
 	    
 	    //panel.add(forgetPass, new GridBagConstraints(0, 5, 2, 1, 1, 1,GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0, 20, 45, 20), 0, 0));
 	    
@@ -563,7 +567,7 @@ public class LoginForm extends TransparentPanel
       
       JButton enterGame = new RedButton("Увійти в гру");
       
-      JButton enterSkins = new TransparentButton("Система скінів");
+      //JButton enterSkins = new TransparentButton("Система скінів");
       
       
 String usernameProfile = values[2];
@@ -583,14 +587,12 @@ balanceSunLabel.setFont(fontProfile);
 	   
 	   forumLink.setBounds(648,40,50,36);
 	    p.add(forumLink);
-	    uslugiLink.setBounds(724,40,50,36);
+	    uslugiLink.setBounds(724,40,60,36);
 		    p.add(uslugiLink);
 
 	    JPanel logo = new LogoPanel();
 	    logo.setBounds(398,40,173,36);
 	    p.add(logo);
-	    
-	    JPanel viewSkin = new ViewSkins(usernameProfile);
 	    
 	    JPanel jpAuth = new JPanel();
 	    jpAuth.setLayout(new GridBagLayout());
@@ -602,12 +604,10 @@ balanceSunLabel.setFont(fontProfile);
 	    errorPanels.add(new Logotype("panel.png"), new GridBagConstraints(0, 0, 2, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.NONE, new Insets(8, 0, 8, 0), 0, 0));
 	    errorPanels.add(usernameProfileLabel, new GridBagConstraints(0, 1, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
 	    
-	    errorPanels.add(viewSkin, new GridBagConstraints(0, 2, 2, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.NONE, new Insets(8, 0, 8, 0), 0, 0));
-	    
 	    errorPanels.add(balanceMoonLabel, new GridBagConstraints(0, 2, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
 	    errorPanels.add(balanceSunLabel, new GridBagConstraints(0, 3, 1, 1, 1, 1,GridBagConstraints.NORTH , GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 0, 0));
         
-	    errorPanels.add(enterSkins, new GridBagConstraints(0, 4, 1, 1, 1, 1,GridBagConstraints.SOUTH , GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
+//	    errorPanels.add(enterSkins, new GridBagConstraints(0, 4, 1, 1, 1, 1,GridBagConstraints.SOUTH , GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
 	    errorPanels.add(optionsButton, new GridBagConstraints(0, 5, 1, 1, 1, 1,GridBagConstraints.SOUTH , GridBagConstraints.BOTH, new Insets(0, 20, 6, 20), 0, 0));
 	    
 	    optionsButton.addActionListener(new ActionListener() {
@@ -667,7 +667,7 @@ balanceSunLabel.setFont(fontProfile);
 		        }
 		      };
 		      
-		      enterSkins.addActionListener(buildSkin);
+//		      enterSkins.addActionListener(buildSkin);
 	    
 	    return p;
   }
@@ -748,7 +748,7 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
   private JPanel panelSkinSystem(final String login, final String pass, final String info){
 	  
 	  
-      final JButton againButton = new RedButton("Попробовать еще раз");
+      final JButton againButton = new RedButton("Спробувати ще раз");
 	    ActionListener buildSkin = new ActionListener() {
 	        public void actionPerformed(ActionEvent arg0) {
 	        	
@@ -760,19 +760,19 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 	  
 	  Color DoneColor = Color.decode("#6ad449");
 	  Font font = new Font("Arial", Font.BOLD, 13);
-	  final JLabel doneLabel = new TransparentLabel("Скин успешно загружен!");
+	  final JLabel doneLabel = new TransparentLabel("Скін успішно завантажено!");
 	  doneLabel.setForeground(DoneColor);
 	  doneLabel.setFont(font);
 
 	  Font errorFont = new Font("Arial", Font.BOLD, 12);
-	  final JLabel sizeErrorLabel = new TransparentLabel("Изображение должны быть размером 64x32");
-	  final JLabel chiterErrorLabel = new TransparentLabel("неизвестная ошибка(если вы понимаете о чем я ;)");
+	  final JLabel sizeErrorLabel = new TransparentLabel("Зображення повинно бути розміром 64x32");
+	  final JLabel chiterErrorLabel = new TransparentLabel("Невідома помилка (чіти - зло)");
 	  sizeErrorLabel.setForeground(LIGHTREDERROR);
 	  sizeErrorLabel.setFont(errorFont);
 	  chiterErrorLabel.setForeground(LIGHTREDERROR);
 	  
-	  final JButton loadSkin = new TransparentButton("Загрузить скин");
-	  final JButton exitButton = new TransparentButton("Перейти в профиль");
+	  final JButton loadSkin = new TransparentButton("Завантажити скін");
+	  final JButton exitButton = new TransparentButton("Перейти в профіль");
 
 	  exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -780,8 +780,8 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
             }
         });
 	  
-	  JButton openFile = new TransparentButton("Открыть файл");
-	  JButton openSkinUrl = new RedButton("Каталог скинов");
+	  JButton openFile = new TransparentButton("Відкрити файл");
+	  JButton openSkinUrl = new RedButton("Каталог скінів");
 	  openSkinUrl.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
       	    setCursor(Cursor.getPredefinedCursor(12));
@@ -817,8 +817,8 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 		  openFile.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser fileopen = new JFileChooser("png");
-	fileopen.setFileFilter(new ExtFileFilter("png", "png Изображения"));
-					int ret = fileopen.showDialog(null, "Открыть файл");				
+	fileopen.setFileFilter(new ExtFileFilter("png", "png Зображення"));
+					int ret = fileopen.showDialog(null, "Відкрити файл");				
 					if (ret == JFileChooser.APPROVE_OPTION) {
 						final File file23 = fileopen.getSelectedFile();
 						  loadSkin.addActionListener(new ActionListener() {
@@ -876,7 +876,7 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
   
   private JPanel panelSettingSystem(final String info){
 
-	    final TransparentCheckbox dlFl = new TransparentCheckbox ("Обновить клиент!");
+	    final TransparentCheckbox dlFl = new TransparentCheckbox ("Перевірити оновлення");
 
 	    dlFl.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent ae) {
@@ -893,7 +893,7 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 
 
 		String[] items = {
-					"Полную версию","Легкую версию"
+					"Повну версію"
 				};
 		final JComboBox selectGame = new JComboBox(items);
 		selectGame.setEditable(false);
@@ -907,14 +907,14 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 		
 		selectGame.addActionListener(actionListener);
 		
-		  if (launcherFrame.clientId.trim().equals("2")){
-			  selectGame.setSelectedItem("Легкую версию");
-		  }else{
-			  selectGame.setSelectedItem("Полную версию");
-		  }
+//		  if (launcherFrame.clientId.trim().equals("2")){
+//			  selectGame.setSelectedItem("Легкую версию");
+//		  }else{
+			  selectGame.setSelectedItem("Повну версію");
+//		  }
 
 			
-		JButton save = new RedButton("Сохранить и выйти");
+		JButton save = new RedButton("Зберегти та вийти");
 		
 
 	    JPanel p = new TransparentPanel(null);
@@ -922,9 +922,9 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 	    JPanel logo = new LogoPanel();
 	    logo.setBounds(343,67,173,36);
 	    p.add(logo);
-	    final JLabel memorySet = new JLabel("Обновление:");
+	    final JLabel memorySet = new JLabel("Оновлення:");
 	    memorySet.setForeground(LIGHTBLUEAUTH);
-	    final JLabel selectGameLabel = new JLabel("Скачивать:");
+	    final JLabel selectGameLabel = new JLabel("Завантажувати:");
 	    selectGameLabel.setForeground(LIGHTBLUEAUTH);
 	    
 	    JPanel jpAuth = new JPanel();
@@ -943,7 +943,7 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
 	    
 	    save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                	if (item.trim().equals("Полную версию")){
+                	if (item.trim().equals("Повну версію")){
                 		launcherFrame.clientId = "1";
                 		launcherFrame.client=setting.client1;
                 		
@@ -1013,7 +1013,7 @@ p.add(text, new GridBagConstraints(0, 2, 0, 0, 1, 1,GridBagConstraints.WEST , Gr
   
   private TransparentLabel getUslugiLink() {
 	  
-	    TransparentLabel accountLink = new TransparentLabel("Услуги") {
+	    TransparentLabel accountLink = new TransparentLabel("Послуги") {
 	    	
 	      private static final long serialVersionUID = 0L;
 	      public void paint(Graphics g) { super.paint(g);

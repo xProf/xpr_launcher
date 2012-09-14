@@ -132,7 +132,7 @@ public class LauncherFrame extends Frame
                 String am_param;
                 String am_rezult;                
               
-                String param = "user=" + URLEncoder.encode(userName, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&version=" + 16;
+                String param = "user=" + URLEncoder.encode(userName, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&version=" + 17;
                 String result = Util.excutePost(setting.authLink, param);
 
                 Preferences node = Preferences.userRoot().node("verify");
@@ -297,10 +297,15 @@ public class LauncherFrame extends Frame
   try{
   MessageDigest md5  = MessageDigest.getInstance("md5");
   String p =allHashes + calculateHash(md5, f);
+//  String p =calculateHash(md5, f);
  
   String hashOfAllHashes=getHash(p);
   	try {	     	
-					URL localURL2 = new URL(setting.hashEtalonLink +hashOfAllHashes+"&user="+userLogin);
+                                        
+            
+            
+            
+            URL localURL2 = new URL(setting.hashEtalonLink +hashOfAllHashes+"&user="+userLogin);
 					BufferedReader localBufferedReader2 = new BufferedReader(new InputStreamReader(localURL2.openStream()));
 
                                         URL localURL = new URL(setting.hashLink +hashOfAllHashes+"&user="+userLogin);
@@ -331,7 +336,9 @@ public class LauncherFrame extends Frame
 
       while (dis.read() != -1);
             byte[] hash = algorithm.digest();
-
+      fis.close();
+      bis.close();
+      dis.close();
       return byteArray2Hex(hash);
   }
 private static String byteArray2Hex(byte[] hash) {
@@ -370,6 +377,7 @@ private String calculateDirectoryHash(File path)
                 try {
                     MessageDigest md5  = MessageDigest.getInstance("md5");
                     hashMD5=hashMD5+calculateHash(md5,files[i].getAbsolutePath());
+                    md5.reset();
                 } catch (Exception e) {
                     Logger.getLogger(LauncherFrame.class.getName()).log(Level.SEVERE, null, e);
                 }
